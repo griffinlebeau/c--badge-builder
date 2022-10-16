@@ -7,38 +7,6 @@ namespace CatWorx.BadgeMaker //namespaces used to organize and provide a level o
 { //everything inside these braces is interpreted as members of that namespace
 class Program
 {
-// Update the method return type
-
-static List<Employee> GetEmployees()
-{
-List<Employee> employees = new List<Employee>();
-while(true) 
-{
-  // Move the initial prompt inside the loop, so it repeats for each employee
-  Console.WriteLine("Enter first name (leave empty to exit): ");
-
-  // change input to firstName
-  string firstName = Console.ReadLine() ?? "";
-  if (firstName == "") 
-  {
-    break;
-  }
-
-  // add a Console.ReadLine() for each value
-  Console.Write("Enter last name: ");
-  string lastName = Console.ReadLine() ?? "";
-Console.Write("Enter ID: ");
-  int id = Int32.Parse(Console.ReadLine() ?? "");
-  Console.Write("Enter Photo URL:");
-  string photoUrl = Console.ReadLine() ?? "";
-  Employee currentEmployee = new Employee(firstName, lastName, id, photoUrl);
-  employees.Add(currentEmployee);
-  }
-
-  return employees;
-}
-// Change the type of the employees parameter
-
 static void PrintEmployees(List<Employee> employees)  {
 for (int i = 0; i < employees.Count; i++) 
 {
@@ -49,7 +17,7 @@ for (int i = 0; i < employees.Count; i++)
 
 async static Task Main(string[] args)
 {
-    List<Employee> employees = GetEmployees();
+    employees = await PeopleFetcher.GetFromApi();    
     Util.PrintEmployees(employees);
     Util.MakeCSV(employees);
     await Util.MakeBadges(employees);
